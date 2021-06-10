@@ -1,0 +1,22 @@
+{
+  "name": "vidly_api",
+  "version": "1.0.0",
+  "description": "This is the backend api for a vidly rental application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterrobert/Vidly_backend.git"
+  },
+  "author": "Peter robert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peterrobert/Vidly_backend/issues"
+  },
+  "homepage": "https://github.com/peterrobert/Vidly_backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
