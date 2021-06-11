@@ -18,6 +18,7 @@
   "homepage": "https://github.com/peterrobert/Vidly_backend#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "joi": "^13.0.0"
+    "joi": "^13.0.0",
+    "morgan": "^1.10.0"
   }
 }
