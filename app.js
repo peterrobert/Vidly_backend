@@ -77,6 +77,13 @@ app.put('/api/genres/:id', (req, res) => {
 
 app.delete('/api/genres/:id', (req,res) => {
    let genreId = parseInt(req.params.id);
+   let genre = genres.find((value) =>  value.id === genreId );
+   if (!genre) { return res.status(404).send('There is no genre with that specific id') };
+
+   let removeItem = genreId - 1;
+   let ans =  genres.splice(removeItem, 1);
+   res.status(200).send(ans)
+
 })
 
 
