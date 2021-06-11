@@ -58,23 +58,25 @@ app.post('/api/genres', (req, res) => {
     })
 })
 
-app.put('api/genres/:id', (req, res) => {
-    const genreId = parseInt(req.params.id);
+app.put('/api/genres/:id', (req, res) => {
+    let genreId = parseInt(req.params.id);
 
-    const genre = genres.find((value) => { return value.id === genreId });
+    let genre = genres.find((value) =>  value.id === genreId );
     if (!genre) { return res.status(404).send('There is no genre with that specific id') };
 
     // validation
-    const results = objValidation(req.body);
+    let results = objValidation(req.body);
     results.then((value) => {
-        console.log(value)
+       genre.title = value.title;
+       res.status(200).send(genre)
     }).catch((err) => {
-        console.log(err)
+        res.status(404).send(err.details[0].message)
     })
 
 })
 
-app.post('/api/genres', (req, res) => {
+app.delete('/api/genres/:id', (req,res) => {
+   let genreId = parseInt(req.params.id);
 })
 
 
