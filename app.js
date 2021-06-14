@@ -6,7 +6,7 @@ const home = require('./routes/home');
 const auth = require('./middleWare/authentication')
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // middle ware
 app.use(express.json());
