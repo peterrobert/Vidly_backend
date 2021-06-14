@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
+const mongoose = require('mongoose');
 
 
 //=== Validate function
@@ -11,18 +12,24 @@ const objValidation = (obj) => {
     return Joi.validate(obj, schema)
 }
 
+// ===== Genre Schema
+const genreSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    }
+});
 
-// === array of genres
-const genres = [
-    { id: 1, title: 'Action' },
-    { id: 2, title: 'Romance' },
-    { id: 3, title: 'Comedy' },
-    { id: 4, title: 'Horror' },
-    { id: 5, title: 'Drama' },
-]
+
+// ===== Genre Model
+const Genre = mongoose.model('Genre', genreSchema);
 
 router.get('/', (req, res) => {
-    res.status(200).send(genres)
+    Genre.find().then((results) => {
+        if(results.length < 1){return res.send('There are no genres yet.')}
+        res.status(200).send(results)
+    }).catch((err) => console.log(err));
+   
 })
 
 router.get('/:id', (req, res) => {
@@ -35,12 +42,10 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     const responseValidation = objValidation(req.body);
     responseValidation.then((value) => {
-        const obj = {
-            id: genres.length + 1,
-            title: value.title
-        }
-        genres.push(obj);
-        res.status(200).send(obj)
+        let data = new Genre(value);
+        data.save().then((results) => {   
+            res.status(200).send(results)
+        })  
     }).catch((err) => {
         res.status(404).send(err.details[0].message)
     })
