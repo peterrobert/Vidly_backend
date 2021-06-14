@@ -4,7 +4,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 
-//=== Validate function
+//=== Validate function==
 const objValidation = (obj) => {
     const schema = {
         title: Joi.string().max(30).min(3).required()
@@ -12,20 +12,22 @@ const objValidation = (obj) => {
     return Joi.validate(obj, schema)
 }
 
-// ===== Genre Schema
+// ===== Genre Schema==
 const genreSchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
+        minlength: 5,
+        maxlength: 50
     }
 });
 
 
-// ===== Genre Model
+// ===== Genre Model ==
 const Genre = mongoose.model('Genre', genreSchema);
 
 router.get('/', (req, res) => {
-    Genre.find().then((results) => {
+    Genre.find().sort('title').then((results) => {
         if (results.length < 1) { return res.send('There are no genres yet.') }
         res.status(200).send(results)
     }).catch((err) => console.log(err));
@@ -43,7 +45,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // === Create new genre
+    // === Create new genre ==
     const createGenre = (obj) => {
         let data = new Genre(obj);
         data.save().then((results) => {
@@ -51,7 +53,7 @@ router.post('/', (req, res) => {
         }).catch((err) => { console.log(err) })
     }
 
-    // === Validate the user request
+    // === Validate the user request ==
     const responseValidation = objValidation(req.body);
     responseValidation.then((value) => {
         createGenre(value);
@@ -62,7 +64,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     let genreId = req.params.id;
-    // === Update function
+    // === Update function ==
     const updateFunction = (obj) => {
         Genre.findByIdAndUpdate(genreId, obj, { new: true })
             .then((data) => {
@@ -73,7 +75,7 @@ router.put('/:id', (req, res) => {
             })
     }
 
-    // ===== validation
+    // ===== validation ==
     let results = objValidation(req.body);
     results.then((value) => {
         updateFunction(value)
@@ -93,7 +95,6 @@ router.delete('/:id', (req, res) => {
             res.status(404).send('There is no genre with that specific id')
             console.log(err)
         })
-
 })
 
 
