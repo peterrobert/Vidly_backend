@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 // custom modules
+const movies = require('./routes/movie')
 const customers = require('./routes/customers')
 const genres = require('./routes/genres');
 const home = require('./routes/home');
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(auth);
 
 // ===routes
+app.use('api/movies', movies)
 app.use('/api/customers', customers)
 app.use('/api/genres', genres);
 app.use('/', home);

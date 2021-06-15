@@ -24,3 +24,4 @@ const Genre = mongoose.model('Genre', genreSchema);
 
 exports.objValidation = objValidation;
 exports.Genre = Genre;
+exports.genreSchema  = genreSchema;
