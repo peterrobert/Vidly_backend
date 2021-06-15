@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 // custom modules
+const customers = require('./routes/customers')
 const genres = require('./routes/genres');
 const home = require('./routes/home');
 const auth = require('./middleWare/authentication')
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(auth);
 
 // ===routes
+app.use('/api/customers', customers)
 app.use('/api/genres', genres);
 app.use('/', home);
 
