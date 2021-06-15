@@ -25,7 +25,7 @@ const Customer = mongoose.model('Customer', mongoose.Schema({
     }
 }));
 
-// Validation ====
+// VALIDATION ====
 const objValidation = (obj) => {
     const schema = {
         isGold: joi.boolean().required(),
@@ -48,23 +48,55 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    // === Create a customer
+    // CREATE THE CUSTOMER ====
     const createCustomer = (obj) => {
         let result = new Customer(obj);
         result.save().then((value) => {
             res.status(200).send(value)
-        }).catch((err) =>{ console.log(err)})
+        }).catch((err) => { console.log(err) })
     };
 
-    // ==validate
+    // VALIDATE ======
     const responseValidation = objValidation(req.body);
     responseValidation.then((value) => {
         createCustomer(value);
     }).catch((err) => {
         res.status(404).send(err.details[0].message)
     })
-  
-   
+
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const result = await Customer.findById(req.params.id);
+        if (!result) return res.status(404).send('There is no customer with that ID');
+        res.status(200).send(result)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+router.put('/:id',  (req, res) => {
+
+    // UPDATE THE CUSTOMER ====
+     const customerUpdate = (obj) => {
+        Customer.findByIdAndUpdate(req.params.id, obj, {new: true})
+        .then((result) => {
+            if(!result) return res.status(404).send('There is no customer with that id');
+            res.status(200).send(result)
+        })
+        .catch((err) => console.log(err));
+     }
+     
+
+    // VALIDATE =====
+    const responseValidation = objValidation(req.body);
+    responseValidation.then((value) => {
+       customerUpdate(value)
+    }).catch((err) => {
+        res.status(404).send(err.details[0].message)
+    })
+
 })
 
 
