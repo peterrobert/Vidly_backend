@@ -99,6 +99,16 @@ router.put('/:id',  (req, res) => {
 
 })
 
+router.delete('/:id',  async (req, res) => {
+   try {
+    const results = await Customer.findByIdAndDelete(req.params.id)
+     res.status(200).send(results);
+   } catch (error) {
+       console.log(error)
+   }
+   
+})
+
 
 
 
