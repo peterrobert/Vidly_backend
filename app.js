@@ -25,9 +25,10 @@ app.use(express.json());
 app.use(auth);
 
 // ===routes
-app.use('api/movies', movies)
 app.use('/api/customers', customers)
 app.use('/api/genres', genres);
+app.use('/api/genres', movies)
+
 app.use('/', home);
 
 

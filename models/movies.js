@@ -9,10 +9,11 @@ const {genreSchema} = require('../models/genres');
 const movieObjValidation = (obj) => {
     const schema = {
         title: Joi.string().required(),
-        genre: Joi.object().required(),
         numberInStock: Joi.number().required(),
         dailyRentalRate: Joi.number().required()
     }
+
+    return Joi.validate(obj, schema)
 }
 
 
@@ -29,7 +30,6 @@ const movieSchema = mongoose.Schema({
 })
 
 // Movie Model =====
-
 const Movie = mongoose.model('Movie', movieSchema);
 
 exports.Movie = Movie;
