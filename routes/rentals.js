@@ -14,12 +14,10 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/:customerID/:movieID', (req, res) => {
-
-
     const createRental = (customer, movie) => {
         const rental = new Rental({
             customer: customer,
-            movie: movie
+            movie: movie,
         })
 
         rental.save().then((data) => {
@@ -37,7 +35,6 @@ router.post('/:customerID/:movieID', (req, res) => {
     }).catch((err) => {
         res.status(404).send(err.details[0].message)
     })
-
 
 })
 
