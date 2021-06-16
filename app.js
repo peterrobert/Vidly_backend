@@ -7,6 +7,7 @@ const movies = require('./routes/movie')
 const customers = require('./routes/customers')
 const genres = require('./routes/genres');
 const home = require('./routes/home');
+const rentals = require('./routes/rentals')
 const auth = require('./middleWare/authentication')
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(auth);
 app.use('/api/customers', customers)
 app.use('/api/genres', genres);
 app.use('/api/genres', movies)
+app.use('/api/rentals', rentals )
 
 app.use('/', home);
 
