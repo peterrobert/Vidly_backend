@@ -34,3 +34,4 @@ const Movie = mongoose.model('Movie', movieSchema);
 
 exports.Movie = Movie;
 exports.validate = movieObjValidation;
+exports.movieSchema = movieSchema;
