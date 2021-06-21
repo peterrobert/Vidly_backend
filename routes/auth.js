@@ -3,6 +3,7 @@ const router = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const Joi = require ("joi");
+const jwt = require('jsonwebtoken');
 
 // CUSTOM MODULES ==== 
 const {User} = require('../models/registration')
@@ -30,7 +31,8 @@ router.post('/', (req, res) => {
             const checkPasswords = await bcrypt.compare(obj.password, checkUser.password)
             if(!checkPasswords) return res.status(400).send('This is a wrong email and password combination')
              
-            res.status(200).send(_.pick(checkUser, ['_id', 'name', 'email']) )
+           const token = await jwt.sign({_id: checkUser._id, name: checkUser.name}, "jwtPrivateKey")
+            res.status(200).send(token);
         } catch (error) {
             console.log(error)
         }
