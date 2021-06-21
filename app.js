@@ -9,6 +9,7 @@ const genres = require('./routes/genres');
 const home = require('./routes/home');
 const rentals = require('./routes/rentals')
 const register = require('./routes/registration')
+const trailers = require('./routes/trailer')
 const auth = require('./middleWare/authentication')
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(auth);
 app.use('/api/customers', customers)
 app.use('/api/genres', genres);
 app.use('/api/genres', movies)
+app.use('/api/trailers', trailers)
 app.use('/api/rentals', rentals )
 app.use('/api/register', register)
 
