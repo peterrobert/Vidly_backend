@@ -57,10 +57,10 @@ router.post('/:genreID/movies', (req, res) => {
 
 })
 
-router.get('/:genreID/movies/:Id', async(req, res) => {
-        const results =  await Movie.findById(req.params.Id);
-        if (!results) return res.status(400).send('The movie ID is invalid');
-        res.status(200).send(results)
+router.get('/:genreID/movies/:Id', async (req, res) => {
+    const results = await Movie.findById(req.params.Id);
+    if (!results) return res.status(400).send('The movie ID is invalid');
+    res.status(200).send(results)
 })
 
 router.put('/:genreID/movies/:Id', (req, res) => {
@@ -74,27 +74,27 @@ router.put('/:genreID/movies/:Id', (req, res) => {
             })
     }
 
-     // ===== validation ==
-     let results = validate(req.body);
-     results.then((value) => {
-         updateFunction(value)
-     }).catch((err) => {
-         res.status(404).send(err.details[0].message)
-     })
+    // ===== validation ==
+    let results = validate(req.body);
+    results.then((value) => {
+        updateFunction(value)
+    }).catch((err) => {
+        res.status(404).send(err.details[0].message)
+    })
 
 })
 
 router.delete('/:genreID/movies/:Id', (req, res) => {
 
     let movieId = req.params.Id;
-    Movie.deleteOne({ _id:  movieId  })
-    .then((data) => {
-        res.status(200).send('Genre deleted successfuly..')
-        console.log(data)
-    }).catch((err) => {
-        res.status(404).send('There is no genre with that specific id')
-        console.log(err)
-    })
+    Movie.deleteOne({ _id: movieId })
+        .then((data) => {
+            res.status(200).send('Genre deleted successfuly..')
+            console.log(data)
+        }).catch((err) => {
+            res.status(404).send('There is no genre with that specific id')
+            console.log(err)
+        })
 
 })
 
