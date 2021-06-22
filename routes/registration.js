@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // CUSTOM MODULES ==== 
 const {User, validate} = require('../models/registration')
@@ -26,7 +27,8 @@ router.post('/', (req, res) => {
                 password: userPassword
             });
             const data = await user.save();
-            res.status(200).send(_.pick(data, ['_id', 'name', 'email']) )
+            const token = await jwt.sign({_id: checkUser._id, name: checkUser.name}, "jwtPrivateKey")
+            res.header('x-auth-token', token).send(_.pick(data, ['_id', 'name', 'email']) )
         } catch (error) {
             console.log(error)
         }
