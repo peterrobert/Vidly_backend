@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
       if (!checkUser) return res.status(400).send('invalid email or password');
 
       const checkPasswords = await bcrypt.compare(obj.password, checkUser.password)
-      if (!checkPasswords) return res.status(400).send('This is a wrong email and password combination')
+      if (!checkPasswords) return res.status(400).send('invalid email or password')
 
       const token = generateToken(checkUser);
       res.header('x-auth-token', token).send(_.pick(checkUser, ['name', 'email', '_id']))

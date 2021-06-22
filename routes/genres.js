@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authorization = require("../middleWare/authentication")
+const admin = require('../middleWare/admin')
 //  CUSTOM MODELS =====
 const {Genre, objValidation} = require('../models/genres');
 
@@ -43,7 +44,7 @@ router.post('/', authorization, (req, res) => {
 
 router.put('/:id',  authorization,(req, res) => {
     let genreId = req.params.id;
-    // === Update function ==
+    // === Update function ====
     const updateFunction = (obj) => {
         Genre.findByIdAndUpdate(genreId, obj, { new: true })
             .then((data) => {
@@ -54,7 +55,7 @@ router.put('/:id',  authorization,(req, res) => {
             })
     }
 
-    // ===== validation ==
+    // ===== validation ====
     let results = objValidation(req.body);
     results.then((value) => {
         updateFunction(value)
@@ -64,7 +65,7 @@ router.put('/:id',  authorization,(req, res) => {
 
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [authorization, admin],  (req, res) => {
     let genreId = req.params.id;
     Genre.deleteOne({ _id: genreId })
         .then((data) => {

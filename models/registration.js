@@ -21,7 +21,8 @@ const userSchema = mongoose.Schema({
         required: true,
         minlength: 6,
         maxlength: 1024
-    }
+    },
+    isAdmin: Boolean
 })
 
 const User = mongoose.model('User', userSchema)
