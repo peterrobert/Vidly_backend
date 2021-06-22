@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authorization = require("../middleWare/authentication")
 //  CUSTOM MODELS =====
 const {Genre, objValidation} = require('../models/genres');
 
@@ -21,7 +22,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', authorization, (req, res) => {
+    console.log(req)
     // === Create new genre ==
     const createGenre = (obj) => {
         let data = new Genre(obj);
@@ -39,7 +41,7 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id',  authorization,(req, res) => {
     let genreId = req.params.id;
     // === Update function ==
     const updateFunction = (obj) => {

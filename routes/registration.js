@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 // CUSTOM MODULES ==== 
 const {User, validate} = require('../models/registration')
+const generateToken = require('../Logic');
 
 // bcypt salt 
 const saltRounds = 10
@@ -27,7 +28,7 @@ router.post('/', (req, res) => {
                 password: userPassword
             });
             const data = await user.save();
-            const token = await jwt.sign({_id: checkUser._id, name: checkUser.name}, "jwtPrivateKey")
+            const token = generateToken(data);
             res.header('x-auth-token', token).send(_.pick(data, ['_id', 'name', 'email']) )
         } catch (error) {
             console.log(error)

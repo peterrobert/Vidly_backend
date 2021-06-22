@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+// const config = require('config');
 
 // custom modules
 const movies = require('./routes/movie')
@@ -10,10 +11,16 @@ const home = require('./routes/home');
 const rentals = require('./routes/rentals')
 const register = require('./routes/registration')
 const logIn = require('./routes/auth')
-const auth = require('./middleWare/authentication')
+
 
 const app = express();
 const port = process.env.PORT || 5000;
+// ====check for config setting
+
+// if(!config.get("jwtPrivateKey")){
+//    console.log("FATAL ERROR: JWT TOKEN NOT SET");
+//    process.exit(1);
+// }
 
 // ==== Connect to database.
 const databaseConnect = () => {
@@ -25,7 +32,7 @@ databaseConnect();
 
 //====  middle ware
 app.use(express.json());
-app.use(auth);
+
 
 // ===routes
 app.use('/api/customers', customers)
@@ -33,9 +40,9 @@ app.use('/api/genres', genres);
 app.use('/api/genres', movies)
 app.use('/api/rentals', rentals )
 app.use('/api/register', register)
+app.use('/', home);
 app.use('/api/authenticate', logIn)
 
-app.use('/', home);
 
 
 // Check for the enviroment
