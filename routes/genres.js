@@ -9,7 +9,11 @@ router.get('/', (req, res) => {
     Genre.find().sort('title').then((results) => {
         if (results.length < 1) { return res.send('There are no genres yet.') }
         res.status(200).send(results)
-    }).catch((err) => console.log(err));
+    }).catch((err) =>{
+        // ==== Log the error
+        
+       res.status(500).send("Something went wrong while fetching the genres")
+    });
 
 })
 

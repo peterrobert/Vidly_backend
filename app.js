@@ -42,7 +42,8 @@ app.use('/api/trailers', trailers)
 app.use('/api/rentals', rentals )
 app.use('/api/register', register)
 app.use('/', home);
-app.use('/api/authenticate', logIn)
+// app.use('/api/authenticate', logIn)
+
 
 
 
