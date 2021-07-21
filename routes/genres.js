@@ -5,15 +5,10 @@ const admin = require('../middleWare/admin')
 //  CUSTOM MODELS =====
 const {Genre, objValidation} = require('../models/genres');
 
-router.get('/', (req, res, next) => {
-    Genre.find().sort('title').then((results) => {
-        if (results.length < 1) { return res.send('There are no genres yet.') }
-        res.status(200).send(results)
-    }).catch((err) =>{
-        // ==== Log the error
-       next(err)
-    });
-
+router.get('/', async (req, res, next) => {
+    const allGenres =  await Genre.find().sort('title');
+    if ( allGenres.length < 1) { return res.send('There are no genres yet.') }
+    res.status(200).send(results)
 })
 
 router.get('/:id', (req, res) => {
