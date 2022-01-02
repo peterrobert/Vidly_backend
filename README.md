@@ -39,14 +39,6 @@
    localhost:5000
 
    ```
-- To see the live site check here
-
-   [Live Demo Link](/)
-
-
-- To see the admin page
-
-   [Live Demo Link](/)
 
 
 
